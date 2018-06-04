@@ -206,6 +206,9 @@ class Demo extends React.Component {
         }
       }
     }
+    const handleChange = (content) => {
+      console.log('context', content)
+    }
 
     return (
       <div>
@@ -218,6 +221,7 @@ class Demo extends React.Component {
             ref={instance => this.editorInstance = instance}
             extendControls={extendControls}
             extendAtomics={extendAtomics}
+            onChange={handleChange}
             media={{
               // onInsert: (files) => {
               //   console.log(files, '000000')

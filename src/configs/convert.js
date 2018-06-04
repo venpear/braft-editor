@@ -62,7 +62,7 @@ const convertAtomicBlock = (block, contentState) => {
     return <div className="media-wrap audio-wrap"><audio controls {...meta} src={url} /></div>
   } else if (mediaType === 'video') {
     return <div className="media-wrap video-wrap"><video controls {...meta} src={url} width={width} height={height} /></div>
-  } else if (mediaType === 'embed') {
+  } else if (mediaType === 'embed' || mediaType === 'iframe') {
     return <div className="media-wrap embed-wrap"><div dangerouslySetInnerHTML={{__html: url}}/></div>
   } else if (mediaType === 'hr') {
     return <hr></hr>
@@ -245,6 +245,9 @@ const htmlToEntity = (nodeName, node, createEntity) => {
     return createEntity('AUDIO', 'IMMUTABLE',{ url: node.src, meta }) 
   } else if (nodeName === 'video') {
     return createEntity('VIDEO', 'IMMUTABLE',{ url: node.src, meta }) 
+  } else if (node === 'iframe') {
+      // TODO: 自定义插入<iframe>
+      return createEntity('IFRAME', 'IMMUTABLE', { url: node.src })
   } else if (nodeName === 'img') {
 
     let parentNode = node.parentNode
@@ -315,6 +318,16 @@ const htmlToBlock = (nodeName, node) => {
       type: blockTypes[blockNames.indexOf(nodeName)],
       data: {
         textAlign: nodeStyle.textAlign
+      }
+    }
+
+  } else if (nodeName === 'iframe') {
+    // TODO: 自定义插入<iframe>
+    return {
+      type: 'atomic',
+      data: {
+        float: nodeStyle.float,
+        alignment: nodeStyle.textAlign
       }
     }
 
