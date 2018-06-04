@@ -145,6 +145,7 @@ export default class MediaPicker extends React.Component {
                     {media.externalMedias.audio ? <button type="button" onClick={this.switchExternalType} data-type="AUDIO">{language.media.audio}</button> : null}
                     {media.externalMedias.video ? <button type="button" onClick={this.switchExternalType} data-type="VIDEO">{language.media.video}</button> : null}
                     {media.externalMedias.embed ? <button type="button" onClick={this.switchExternalType} data-type="EMBED">{language.media.embed}</button> : null}
+                    {media.externalMedias.iframe ? <button type="button" onClick={this.switchExternalType} data-type="IFRAME">{language.media.iframe}</button> : null}
                   </div>
                   <span className="braft-media-external-tip">{language.mediaPicker.externalInputTip}</span>
                 </div>
@@ -183,7 +184,7 @@ export default class MediaPicker extends React.Component {
                 </div>
               )
             break
-            case 'VIDEO':
+            case 'VIDEO', "IFRAME":
               previewerComponents = (
                 <div className="braft-media-icon braft-media-video" title={file.url}>
                   {progressMarker}

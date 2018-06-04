@@ -25,7 +25,6 @@ const getAtomicBlockComponent = (block, superProps) => (props) => {
     ...superProps,
     block, mediaData, entityKey
   }
-
   if (mediaType === 'IMAGE') {
     return <Image { ...mediaProps } />
   } else if (mediaType === 'AUDIO') {
@@ -36,6 +35,8 @@ const getAtomicBlockComponent = (block, superProps) => (props) => {
     return <Embed { ...mediaProps } />
   } else if (mediaType === 'HR') {
     return <HorizontalLine { ...mediaProps } />
+  } else if (mediaType === 'IFRAME') { //扩充 支持第三方分享的iframe
+    return <div><div dangerouslySetInnerHTML={{__html: mediaData.url}} /></div>
   }
   // 支持自定义的atomic
   if (superProps.extendAtomics) {

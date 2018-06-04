@@ -218,6 +218,23 @@ class Demo extends React.Component {
             ref={instance => this.editorInstance = instance}
             extendControls={extendControls}
             extendAtomics={extendAtomics}
+            media={{
+              // onInsert: (files) => {
+              //   console.log(files, '000000')
+              //   const str =  `<iframe height=498 width=510 src='http://player.youku.com/embed/XMzY0NDcxNzY2OA==' frameborder=0 'allowfullscreen'></iframe>`
+              //   this.editorInstance.insertMedias([
+              //    {
+              //       type: 'IFRAME',
+              //       name: 'New Video',
+              //       url: str
+              //     }
+              //   ])
+              //   // // const str = `<embed src='http://player.youku.com/player.php/sid/XMzY0NDcxNzY2OA==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>`
+              //   // // this.editorInstance.insertHTML(str)
+              //   // this.editorInstance.insertHTML('<span>88888</span>')
+              //   return []
+              // } 
+            }}
           />
         </div>
         <div><a href="javascript:void(0);" onClick={this.insertHTMLContent}>插入HTML片段</a></div>

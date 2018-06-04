@@ -498,6 +498,7 @@
     &[data-type="VIDEO"] [data-type="VIDEO"],
     &[data-type="AUDIO"] [data-type="AUDIO"],
     &[data-type="EMBED"] [data-type="EMBED"],
+    &[data-type="IFRAME"] [data-type="IFRAME"],
     &[data-type="FILE"] [data-type="FILE"]{
       background-color: $COLOR_ACTIVE;
       color: #fff;

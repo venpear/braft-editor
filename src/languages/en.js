@@ -64,7 +64,8 @@ export default {
     image: 'Image',
     video: 'Video',
     audio: 'Audio',
-    embed: 'Embed'
+    embed: 'Embed',
+    iframe: 'Third-party Video'
   },
   mediaPicker: {
     caption: 'Media Library',

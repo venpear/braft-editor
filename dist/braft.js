@@ -7599,7 +7599,8 @@ exports.default = {
       audio: true,
       video: true,
       image: true,
-      embed: true
+      embed: true,
+      iframe: true
     }
   },
   imageControls: {
@@ -8428,7 +8429,6 @@ var getAtomicBlockComponent = function getAtomicBlockComponent(block, superProps
     var mediaProps = _extends({}, superProps, {
       block: block, mediaData: mediaData, entityKey: entityKey
     });
-
     if (mediaType === 'IMAGE') {
       return _react2.default.createElement(_Image2.default, mediaProps);
     } else if (mediaType === 'AUDIO') {
@@ -8439,6 +8439,13 @@ var getAtomicBlockComponent = function getAtomicBlockComponent(block, superProps
       return _react2.default.createElement(_Embed2.default, mediaProps);
     } else if (mediaType === 'HR') {
       return _react2.default.createElement(_HorizontalLine2.default, mediaProps);
+    } else if (mediaType === 'IFRAME') {
+      //扩充 支持第三方分享的iframe
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: mediaData.url } })
+      );
     }
     // 支持自定义的atomic
     if (superProps.extendAtomics) {
@@ -9616,6 +9623,11 @@ var MediaPicker = function (_React$Component) {
                     'button',
                     { type: 'button', onClick: this.switchExternalType, 'data-type': 'EMBED' },
                     language.media.embed
+                  ) : null,
+                  media.externalMedias.iframe ? _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: this.switchExternalType, 'data-type': 'IFRAME' },
+                    language.media.iframe
                   ) : null
                 ),
                 _react2.default.createElement(
@@ -9661,7 +9673,7 @@ var MediaPicker = function (_React$Component) {
                 _react2.default.createElement('img', { src: file.thumbnail || file.url })
               );
               break;
-            case 'VIDEO':
+            case ('VIDEO', "IFRAME"):
               previewerComponents = _react2.default.createElement(
                 'div',
                 { className: 'braft-media-icon braft-media-video', title: file.url },
@@ -11099,7 +11111,8 @@ exports.default = {
     image: 'Image',
     video: 'Video',
     audio: 'Audio',
-    embed: 'Embed'
+    embed: 'Embed',
+    iframe: 'Third-party Video'
   },
   mediaPicker: {
     caption: 'Media Library',
@@ -11194,7 +11207,8 @@ exports.default = {
     image: '圖像',
     video: '視頻',
     audio: '音頻',
-    embed: '嵌入式媒體'
+    embed: '嵌入式媒體',
+    iframe: '第三方視頻'
   },
   mediaPicker: {
     caption: '多媒體資源庫',
@@ -11289,7 +11303,8 @@ exports.default = {
     image: '图像',
     video: '视频',
     audio: '音频',
-    embed: '嵌入式媒体'
+    embed: '嵌入式媒体',
+    iframe: '第三方视频'
   },
   mediaPicker: {
     caption: '多媒体资源库',
