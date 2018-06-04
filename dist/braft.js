@@ -7236,7 +7236,7 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
       { className: 'media-wrap video-wrap' },
       _react2.default.createElement('video', _extends({ controls: true }, meta, { src: url, width: width, height: height }))
     );
-  } else if (mediaType === 'embed') {
+  } else if (mediaType === 'embed' || mediaType === 'iframe') {
     return _react2.default.createElement(
       'div',
       { className: 'media-wrap embed-wrap' },
@@ -7448,6 +7448,9 @@ var htmlToEntity = function htmlToEntity(nodeName, node, createEntity) {
     return createEntity('AUDIO', 'IMMUTABLE', { url: node.src, meta: meta });
   } else if (nodeName === 'video') {
     return createEntity('VIDEO', 'IMMUTABLE', { url: node.src, meta: meta });
+  } else if (node === 'iframe') {
+    // TODO: 自定义插入<iframe>
+    return createEntity('IFRAME', 'IMMUTABLE', { url: node.src });
   } else if (nodeName === 'img') {
 
     var parentNode = node.parentNode;
@@ -7515,6 +7518,15 @@ var htmlToBlock = function htmlToBlock(nodeName, node) {
       type: blockTypes[blockNames.indexOf(nodeName)],
       data: {
         textAlign: nodeStyle.textAlign
+      }
+    };
+  } else if (nodeName === 'iframe') {
+    // TODO: 自定义插入<iframe>
+    return {
+      type: 'atomic',
+      data: {
+        float: nodeStyle.float,
+        alignment: nodeStyle.textAlign
       }
     };
   }
