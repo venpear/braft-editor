@@ -5,6 +5,7 @@ import Image from './atomic/Image'
 import Video from './atomic/Video'
 import Audio from './atomic/Audio'
 import Embed from './atomic/Embed'
+import Iframe from './atomic/iframe/Iframe.jsx'
 import HorizontalLine from './atomic/HorizontalLine'
 import _blockStyleFn from './styles/blockStyles'
 import _getCustomStyleMap from './styles/inlineStyles'
@@ -36,7 +37,16 @@ const getAtomicBlockComponent = (block, superProps) => (props) => {
   } else if (mediaType === 'HR') {
     return <HorizontalLine { ...mediaProps } />
   } else if (mediaType === 'IFRAME') { //扩充 支持第三方分享的iframe
-    return <div><div dangerouslySetInnerHTML={{__html: mediaData.url}} /></div>
+    // return <div><div dangerouslySetInnerHTML={{__html: mediaData.url}} /></div>
+    let { url = '' } = mediaProps.mediaData;
+    if (url.indexOf('<iframe') !== -1) {
+      let re = RegExp(/src=\"([a-zA-z]+:\/\/[^\s]*)\"/);
+      console.log(url.replace(re, '$1')); // 拿出iframe中的src部分
+      url = RegExp.$1;
+
+      mediaProps.mediaData.url = url;
+    }
+    return <Iframe { ...mediaProps } />
   }
   // 支持自定义的atomic
   if (superProps.extendAtomics) {

@@ -62,10 +62,19 @@ const convertAtomicBlock = (block, contentState) => {
     return <div className="media-wrap audio-wrap"><audio controls {...meta} src={url} /></div>
   } else if (mediaType === 'video') {
     return <div className="media-wrap video-wrap"><video controls {...meta} src={url} width={width} height={height} /></div>
-  } else if (mediaType === 'embed' || mediaType === 'iframe') {
+  } else if (mediaType === 'embed') {
     return <div className="media-wrap embed-wrap"><div dangerouslySetInnerHTML={{__html: url}}/></div>
   } else if (mediaType === 'hr') {
     return <hr></hr>
+  }else if(mediaType === 'iframe'){
+    if (url.indexOf('<iframe') !== -1) {
+        let temp = url;
+        let re = RegExp(/src=\"([a-zA-z]+:\/\/[^\s]*)\"/);
+        console.log(temp.replace(re, '$1')); // 拿出iframe中的src部分
+        temp = RegExp.$1;
+        url = temp;
+    }
+    return <div className="media-wrap"><iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={url} allowfullscreen></iframe></div>
   } else {
     return <p></p>
   }
