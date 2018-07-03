@@ -223,6 +223,13 @@ class Demo extends React.Component {
             extendAtomics={extendAtomics}
             onChange={handleChange}
             media={{
+              externalMedias: {
+                audio: false,
+                video: false,
+                image: false,
+                embed: false,
+                iframe: true
+              },
               // onInsert: (files) => {
               //   console.log(files, '000000')
               //   const str =  `<iframe height=498 width=510 src='http://player.youku.com/embed/XMzY0NDcxNzY2OA==' frameborder=0 'allowfullscreen'></iframe>`

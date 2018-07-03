@@ -9451,7 +9451,7 @@ var MediaPicker = function (_React$Component) {
       this.setState({
         external: {
           url: '',
-          type: media.externalMedias.image ? 'IMAGE' : media.externalMedias.audio ? 'AUDIO' : media.externalMedias.video ? 'VIDEO' : media.externalMedias.embed ? 'EMBED' : ''
+          type: media.externalMedias.image ? 'IMAGE' : media.externalMedias.audio ? 'AUDIO' : media.externalMedias.video ? 'VIDEO' : media.externalMedias.embed ? 'EMBED' : media.externalMedias.iframe ? 'IFRAME' : ''
         }
       });
 
@@ -9477,7 +9477,7 @@ var MediaPicker = function (_React$Component) {
       this.setState({
         external: {
           url: '',
-          type: media.externalMedias.image ? 'IMAGE' : media.externalMedias.audio ? 'AUDIO' : media.externalMedias.video ? 'VIDEO' : media.externalMedias.embed ? 'EMBED' : ''
+          type: media.externalMedias.image ? 'IMAGE' : media.externalMedias.audio ? 'AUDIO' : media.externalMedias.video ? 'VIDEO' : media.externalMedias.embed ? 'EMBED' : media.externalMedias.iframe ? 'IFRAME' : ''
         }
       });
     }
