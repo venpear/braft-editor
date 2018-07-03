@@ -9502,7 +9502,7 @@ var MediaPicker = function (_React$Component) {
           confirmable = _state.confirmable,
           showExternalForm = _state.showExternalForm;
 
-      var allowExternalMedia = media.externalMedias && (media.externalMedias.image || media.externalMedias.audio || media.externalMedias.video || media.externalMedias.embed);
+      var allowExternalMedia = media.externalMedias && (media.externalMedias.image || media.externalMedias.audio || media.externalMedias.video || media.externalMedias.embed || media.externalMedias.iframe);
       var bottomText = allowExternalMedia ? _react2.default.createElement(
         'span',
         {

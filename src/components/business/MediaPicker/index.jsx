@@ -79,7 +79,7 @@ export default class MediaPicker extends React.Component {
 
     const { media, language } = this.props
     const { files, visible, external, draging, confirmable, showExternalForm } = this.state
-    const allowExternalMedia = media.externalMedias &&  (media.externalMedias.image || media.externalMedias.audio || media.externalMedias.video || media.externalMedias.embed)
+    const allowExternalMedia = media.externalMedias &&  (media.externalMedias.image || media.externalMedias.audio || media.externalMedias.video || media.externalMedias.embed || media.externalMedias.iframe)
     const bottomText = allowExternalMedia ? (
       <span 
         onClick={this.toggleExternalMode}
