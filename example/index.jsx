@@ -11,8 +11,9 @@ class Demo extends React.Component {
     this.state = {
       contentId: 0,
       contentFormat: 'html',
-      initialContent: ``,
-      htmlContent: ''
+    //   initialContent: '<p>testtesttestetetetaststasetetetetetete</p><div className="media-wrap embed-wrap"><div><iframe frameborder="0" width="640" height="498" src="https://v.qq.com/iframe/player.html?vid=n0610a6y3ny&amp;tiny=0&amp;auto=0" allowfullscreen></iframe></div></div><p></p>',
+    initialContent: '',  
+    htmlContent: ''
     }
     this.editorInstance = null
   }

@@ -62,10 +62,19 @@ const convertAtomicBlock = (block, contentState) => {
     return <div className="media-wrap audio-wrap"><audio controls {...meta} src={url} /></div>
   } else if (mediaType === 'video') {
     return <div className="media-wrap video-wrap"><video controls {...meta} src={url} width={width} height={height} /></div>
-  } else if (mediaType === 'embed' || mediaType === 'iframe') {
+  } else if (mediaType === 'embed') {
     return <div className="media-wrap embed-wrap"><div dangerouslySetInnerHTML={{__html: url}}/></div>
   } else if (mediaType === 'hr') {
     return <hr></hr>
+  }else if(mediaType === 'iframe'){
+    if (url.indexOf('<iframe') !== -1) {
+        let temp = url;
+        let re = RegExp(/src=\"([a-zA-z]+:\/\/[^\s]*)\"/);
+        console.log(temp.replace(re, '$1')); // 拿出iframe中的src部分
+        temp = RegExp.$1;
+        url = temp;
+    }
+    return <div className="media-wrap video-wrap"><iframe frameborder="0" style={{ width: '100%', minHeight: '300px' }} allowfullscreen src={url}></iframe></div>
   } else {
     return <p></p>
   }
@@ -245,9 +254,10 @@ const htmlToEntity = (nodeName, node, createEntity) => {
     return createEntity('AUDIO', 'IMMUTABLE',{ url: node.src, meta }) 
   } else if (nodeName === 'video') {
     return createEntity('VIDEO', 'IMMUTABLE',{ url: node.src, meta }) 
-  } else if (node === 'iframe') {
+  } else if (nodeName === 'iframe') {
       // TODO: 自定义插入<iframe>
-      return createEntity('IFRAME', 'IMMUTABLE', { url: node.src })
+    //   return createEntity('IFRAME', 'IMMUTABLE', { url: node.src, meta })
+    return createEntity('IFRAME', 'IMMUTABLE', { url: node.outerHTML, meta })
   } else if (nodeName === 'img') {
 
     let parentNode = node.parentNode
