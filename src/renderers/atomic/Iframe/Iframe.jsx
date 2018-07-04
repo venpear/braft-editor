@@ -24,15 +24,17 @@ export default class Iframe extends React.Component {
         onMouseOver={this.showToolbar}
         onMouseLeave={this.hideToolbar}
       >
-        <i className="braft-icon-film"></i>
+      {/* <iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={this.props.mediaData.url} allowfullscreen></iframe> */}
+      <div dangerouslySetInnerHTML={{__html: this.props.mediaData.url}} />
+        {/* <i className="braft-icon-film"></i>
         <h5>{name}</h5>
-        <h6>{url}</h6>
+        <h6>{url}</h6> */}
         {toolbarVisible ? (
           <div
             ref={instance => this.toolbarElement = instance}
             className="braft-embed-video-toolbar"
           >
-            <a onClick={this.showPlayer}>&#xe037;</a>
+            {/* <a onClick={this.showPlayer}>&#xe037;</a> */}
             <a onClick={this.removevideo}>&#xe9ac;</a>
           </div>
         ) : null}
@@ -42,7 +44,6 @@ export default class Iframe extends React.Component {
   }
 
   showPlayer = () => {
-
     this.playerModal = showModal({
       title: this.props.language.videoPlayer.title,
       width: 480,
@@ -50,8 +51,8 @@ export default class Iframe extends React.Component {
       language: this.props.language,
       showCancel: false,
       onClose: this.handlePlayerClose,
-      // children: <div dangerouslySetInnerHTML={{__html: this.props.mediaData.url}} />
-      children: <iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={this.props.mediaData.url} allowfullscreen></iframe>
+      children: <div dangerouslySetInnerHTML={{__html: this.props.mediaData.url}} />
+    //   children: <iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={this.props.mediaData.url} allowfullscreen></iframe>
     })
 
   }

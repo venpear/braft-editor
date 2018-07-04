@@ -74,7 +74,7 @@ const convertAtomicBlock = (block, contentState) => {
         temp = RegExp.$1;
         url = temp;
     }
-    return <div className="media-wrap"><iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={url} allowfullscreen></iframe></div>
+    return <div className="media-wrap video-wrap"><iframe style={{ width: '100%', minHeight: '300px' }}  src={url}></iframe></div>
   } else {
     return <p></p>
   }
@@ -254,9 +254,10 @@ const htmlToEntity = (nodeName, node, createEntity) => {
     return createEntity('AUDIO', 'IMMUTABLE',{ url: node.src, meta }) 
   } else if (nodeName === 'video') {
     return createEntity('VIDEO', 'IMMUTABLE',{ url: node.src, meta }) 
-  } else if (node === 'iframe') {
+  } else if (nodeName === 'iframe') {
       // TODO: 自定义插入<iframe>
-      return createEntity('IFRAME', 'IMMUTABLE', { url: node.src })
+    //   return createEntity('IFRAME', 'IMMUTABLE', { url: node.src, meta })
+    return createEntity('IFRAME', 'IMMUTABLE', { url: node.outerHTML, meta })
   } else if (nodeName === 'img') {
 
     let parentNode = node.parentNode

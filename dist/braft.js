@@ -7254,8 +7254,8 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
     }
     return _react2.default.createElement(
       'div',
-      { className: 'media-wrap' },
-      _react2.default.createElement('iframe', { style: { width: '100%', minHeight: '300px' }, frameborder: '0', src: url, allowfullscreen: true })
+      { className: 'media-wrap video-wrap' },
+      _react2.default.createElement('iframe', { style: { width: '100%', minHeight: '300px' }, src: url })
     );
   } else {
     return _react2.default.createElement('p', null);
@@ -7461,9 +7461,10 @@ var htmlToEntity = function htmlToEntity(nodeName, node, createEntity) {
     return createEntity('AUDIO', 'IMMUTABLE', { url: node.src, meta: meta });
   } else if (nodeName === 'video') {
     return createEntity('VIDEO', 'IMMUTABLE', { url: node.src, meta: meta });
-  } else if (node === 'iframe') {
+  } else if (nodeName === 'iframe') {
     // TODO: 自定义插入<iframe>
-    return createEntity('IFRAME', 'IMMUTABLE', { url: node.src });
+    //   return createEntity('IFRAME', 'IMMUTABLE', { url: node.src, meta })
+    return createEntity('IFRAME', 'IMMUTABLE', { url: node.outerHTML, meta: meta });
   } else if (nodeName === 'img') {
 
     var parentNode = node.parentNode;
@@ -8405,11 +8406,11 @@ var _immutable = __webpack_require__(2);
 
 var _draftJs = __webpack_require__(5);
 
-var _Image = __webpack_require__(54);
+var _Image = __webpack_require__(55);
 
 var _Image2 = _interopRequireDefault(_Image);
 
-var _Video = __webpack_require__(55);
+var _Video = __webpack_require__(56);
 
 var _Video2 = _interopRequireDefault(_Video);
 
@@ -8421,7 +8422,7 @@ var _Embed = __webpack_require__(52);
 
 var _Embed2 = _interopRequireDefault(_Embed);
 
-var _Iframe = __webpack_require__(56);
+var _Iframe = __webpack_require__(54);
 
 var _Iframe2 = _interopRequireDefault(_Iframe);
 
@@ -8471,16 +8472,14 @@ var getAtomicBlockComponent = function getAtomicBlockComponent(block, superProps
     } else if (mediaType === 'IFRAME') {
       //扩充 支持第三方分享的iframe
       // return <div><div dangerouslySetInnerHTML={{__html: mediaData.url}} /></div>
-      var _mediaProps$mediaData = mediaProps.mediaData.url,
-          url = _mediaProps$mediaData === undefined ? '' : _mediaProps$mediaData;
+      // let { url = '' } = mediaProps.mediaData;
+      // if (url.indexOf('<iframe') !== -1) {
+      //   let re = RegExp(/src=\"([a-zA-z]+:\/\/[^\s]*)\"/);
+      //   console.log(url.replace(re, '$1')); // 拿出iframe中的src部分
+      //   url = RegExp.$1;
 
-      if (url.indexOf('<iframe') !== -1) {
-        var re = RegExp(/src=\"([a-zA-z]+:\/\/[^\s]*)\"/);
-        console.log(url.replace(re, '$1')); // 拿出iframe中的src部分
-        url = RegExp.$1;
-
-        mediaProps.mediaData.url = url;
-      }
+      //   mediaProps.mediaData.url = url;
+      // }
       return _react2.default.createElement(_Iframe2.default, mediaProps);
     }
     // 支持自定义的atomic
@@ -11158,7 +11157,8 @@ exports.default = {
     deselect: 'Deselect',
     removeSelected: 'Remove Selected Items',
     externalInputPlaceHolder: 'Source Name|Source URL',
-    externalInputTip: 'Split source name and source URL with "|", confirm by hit Enter.',
+    // externalInputTip: 'Split source name and source URL with "|", confirm by hit Enter.',
+    externalInputTip: 'Citing video support to Tencent, Iqiyi',
     addLocalFile: 'Add from local',
     addExternalSource: 'Add from Internet',
     unnamedItem: 'Unnamed Item',
@@ -11254,7 +11254,8 @@ exports.default = {
     deselect: '取消選择',
     removeSelected: '删除所選项目',
     externalInputPlaceHolder: '資源名稱|資源地址',
-    externalInputTip: '以豎線符("|")分割資源名和資源地址，按回車確認',
+    // externalInputTip: '以豎線符("|")分割資源名和資源地址，按回車確認',
+    externalInputTip: '引用视频支持腾讯，爱奇艺',
     addLocalFile: '添加本地文件',
     addExternalSource: '添加網絡資源',
     unnamedItem: '未命名項目',
@@ -11350,7 +11351,8 @@ exports.default = {
     deselect: '取消选择',
     removeSelected: '删除所选项目',
     externalInputPlaceHolder: '资源名称|资源地址',
-    externalInputTip: '以竖线符("|")分割资源名和资源地址，按回车确认',
+    // externalInputTip: '以竖线符("|")分割资源名和资源地址，按回车确认',
+    externalInputTip: '引用视频支持腾讯，爱奇艺',
     addLocalFile: '添加本地文件',
     addExternalSource: '添加网络资源',
     unnamedItem: '未命名项目',
@@ -11723,11 +11725,136 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__(84);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Modal = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Iframe = function (_React$Component) {
+  _inherits(Iframe, _React$Component);
+
+  function Iframe() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Iframe);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Iframe.__proto__ || Object.getPrototypeOf(Iframe)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      toolbarVisible: false,
+      playerVisible: false
+    }, _this.showPlayer = function () {
+      _this.playerModal = (0, _Modal.showModal)({
+        title: _this.props.language.videoPlayer.title,
+        width: 480,
+        confirmable: true,
+        language: _this.props.language,
+        showCancel: false,
+        onClose: _this.handlePlayerClose,
+        children: _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: _this.props.mediaData.url } })
+        //   children: <iframe style={{ width: '100%', minHeight: '300px' }} frameborder="0" src={this.props.mediaData.url} allowfullscreen></iframe>
+      });
+    }, _this.removevideo = function () {
+      _this.props.editor.removeBlock(_this.props.block);
+    }, _this.showToolbar = function () {
+      _this.setState({
+        toolbarVisible: true
+      });
+    }, _this.hideToolbar = function () {
+      _this.setState({
+        toolbarVisible: false
+      });
+    }, _this.handlePlayerClose = function () {
+      _this.props.editor && _this.props.editor.focus();
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Iframe, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.playerModal && this.playerModal.destroy();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _state = this.state,
+          toolbarVisible = _state.toolbarVisible,
+          playerVisible = _state.playerVisible;
+      var _props = this.props,
+          mediaData = _props.mediaData,
+          language = _props.language;
+      var url = mediaData.url,
+          width = mediaData.width,
+          height = mediaData.height,
+          name = mediaData.name;
+
+
+      return _react2.default.createElement(
+        'div',
+        {
+          className: 'braft-media-video-holder',
+          onMouseOver: this.showToolbar,
+          onMouseLeave: this.hideToolbar
+        },
+        _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.mediaData.url } }),
+        toolbarVisible ? _react2.default.createElement(
+          'div',
+          {
+            ref: function ref(instance) {
+              return _this2.toolbarElement = instance;
+            },
+            className: 'braft-embed-video-toolbar'
+          },
+          _react2.default.createElement(
+            'a',
+            { onClick: this.removevideo },
+            '\uE9AC'
+          )
+        ) : null
+      );
+    }
+  }]);
+
+  return Iframe;
+}(_react2.default.Component);
+
+exports.default = Iframe;
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(84);
+__webpack_require__(85);
 
 var _react = __webpack_require__(0);
 
@@ -12113,7 +12240,7 @@ var Image = function (_React$Component) {
 exports.default = Image;
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12125,7 +12252,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(85);
+__webpack_require__(86);
 
 var _react = __webpack_require__(0);
 
@@ -12260,147 +12387,6 @@ var Video = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Video;
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__(86);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Modal = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Iframe = function (_React$Component) {
-  _inherits(Iframe, _React$Component);
-
-  function Iframe() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, Iframe);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Iframe.__proto__ || Object.getPrototypeOf(Iframe)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      toolbarVisible: false,
-      playerVisible: false
-    }, _this.showPlayer = function () {
-
-      _this.playerModal = (0, _Modal.showModal)({
-        title: _this.props.language.videoPlayer.title,
-        width: 480,
-        confirmable: true,
-        language: _this.props.language,
-        showCancel: false,
-        onClose: _this.handlePlayerClose,
-        // children: <div dangerouslySetInnerHTML={{__html: this.props.mediaData.url}} />
-        children: _react2.default.createElement('iframe', { style: { width: '100%', minHeight: '300px' }, frameborder: '0', src: _this.props.mediaData.url, allowfullscreen: true })
-      });
-    }, _this.removevideo = function () {
-      _this.props.editor.removeBlock(_this.props.block);
-    }, _this.showToolbar = function () {
-      _this.setState({
-        toolbarVisible: true
-      });
-    }, _this.hideToolbar = function () {
-      _this.setState({
-        toolbarVisible: false
-      });
-    }, _this.handlePlayerClose = function () {
-      _this.props.editor && _this.props.editor.focus();
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(Iframe, [{
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.playerModal && this.playerModal.destroy();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var _state = this.state,
-          toolbarVisible = _state.toolbarVisible,
-          playerVisible = _state.playerVisible;
-      var _props = this.props,
-          mediaData = _props.mediaData,
-          language = _props.language;
-      var url = mediaData.url,
-          width = mediaData.width,
-          height = mediaData.height,
-          name = mediaData.name;
-
-
-      return _react2.default.createElement(
-        'div',
-        {
-          className: 'braft-media-video-holder',
-          onMouseOver: this.showToolbar,
-          onMouseLeave: this.hideToolbar
-        },
-        _react2.default.createElement('i', { className: 'braft-icon-film' }),
-        _react2.default.createElement(
-          'h5',
-          null,
-          name
-        ),
-        _react2.default.createElement(
-          'h6',
-          null,
-          url
-        ),
-        toolbarVisible ? _react2.default.createElement(
-          'div',
-          {
-            ref: function ref(instance) {
-              return _this2.toolbarElement = instance;
-            },
-            className: 'braft-embed-video-toolbar'
-          },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.showPlayer },
-            '\uE037'
-          ),
-          _react2.default.createElement(
-            'a',
-            { onClick: this.removevideo },
-            '\uE9AC'
-          )
-        ) : null
-      );
-    }
-  }]);
-
-  return Iframe;
-}(_react2.default.Component);
-
-exports.default = Iframe;
 
 /***/ }),
 /* 57 */
