@@ -74,7 +74,7 @@ const convertAtomicBlock = (block, contentState) => {
         temp = RegExp.$1;
         url = temp;
     }
-    return <div className="media-wrap video-wrap"><iframe style={{ width: '100%', minHeight: '300px' }}  src={url}></iframe></div>
+    return <div className="media-wrap video-wrap"><iframe frameborder="0" style={{ width: '100%', minHeight: '300px' }} allowfullscreen src={url}></iframe></div>
   } else {
     return <p></p>
   }

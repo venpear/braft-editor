@@ -7255,7 +7255,7 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
     return _react2.default.createElement(
       'div',
       { className: 'media-wrap video-wrap' },
-      _react2.default.createElement('iframe', { style: { width: '100%', minHeight: '300px' }, src: url })
+      _react2.default.createElement('iframe', { frameborder: '0', style: { width: '100%', minHeight: '300px' }, allowfullscreen: true, src: url })
     );
   } else {
     return _react2.default.createElement('p', null);
