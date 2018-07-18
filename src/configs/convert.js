@@ -74,7 +74,13 @@ const convertAtomicBlock = (block, contentState) => {
         temp = RegExp.$1;
         url = temp;
     }
-    return <div className="media-wrap video-wrap"><iframe frameborder="0" style={{ width: '100%', minHeight: '300px' }} allowfullscreen src={url}></iframe></div>
+
+    let newUrl = url;
+    if(url.indexOf("http://") != -1){
+        newUrl = url.replace("http://", "https://")
+    }
+
+    return <div className="media-wrap video-wrap"><iframe frameborder="0" style={{ width: '100%', minHeight: '300px' }} allowfullscreen src={newUrl}></iframe></div>
   } else {
     return <p></p>
   }
