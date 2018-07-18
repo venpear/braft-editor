@@ -7252,10 +7252,16 @@ var convertAtomicBlock = function convertAtomicBlock(block, contentState) {
       temp = RegExp.$1;
       url = temp;
     }
+
+    var newUrl = url;
+    if (url.indexOf("http://") != -1) {
+      newUrl = url.replace("http://", "https://");
+    }
+
     return _react2.default.createElement(
       'div',
       { className: 'media-wrap video-wrap' },
-      _react2.default.createElement('iframe', { frameborder: '0', style: { width: '100%', minHeight: '300px' }, allowfullscreen: true, src: url })
+      _react2.default.createElement('iframe', { frameborder: '0', style: { width: '100%', minHeight: '300px' }, allowfullscreen: true, src: newUrl })
     );
   } else {
     return _react2.default.createElement('p', null);
